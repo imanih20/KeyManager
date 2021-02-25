@@ -1,0 +1,13 @@
+<resources>
+    <string-array name="spinner_values">
+        <item>اولین شماره تلفن همراه</item>
+        <item>نام شخص مورد علاقه</item>
+        <item>ورزش مورد علاقه</item>
+        <item>شماره تلفن مورد علاقه</item>
+        <item>تاریخ تولد</item>
+        <item>تاریخ تولد شخص مورد علاقه</item>
+        <item>غذای مورد علاقه</item>
+        <item>شماره تلفن شخص مورد علاقه</item>
+        <item>رنگ مورد علاقه</item>
+    </string-array>
+</resources>

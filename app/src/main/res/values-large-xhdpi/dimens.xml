@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //about fragment
+    <dimen name="app_icon_about_fragment_size">150dp</dimen>
+    <dimen name="about_fragment_app_name_text_size">28sp</dimen>
+    <dimen name="about_text_size">20sp</dimen>
+    <dimen name="developer_name_top_margin">35dp</dimen>
+    <dimen name="about_version_layout_top_margin">75dp</dimen>
+    <dimen name="about_version_title_text_size">18sp</dimen>
+    <dimen name="about_version_margin">5dp</dimen>
+    <dimen name="about_callus_margin">15dp</dimen>
+    <dimen name="about_item_margin">10dp</dimen>
+    //activity launcher
+    <dimen name="launcher_app_icon_size">120dp</dimen>
+    <dimen name="launcher_app_icon_margin">40dp</dimen>
+    <dimen name="launcher_version_bottom_margin">75dp</dimen>
+    <dimen name="launcher_card_size">450dp</dimen>
+    <dimen name="launcher_version_name_text_size">20sp</dimen>
+    <dimen name="launcher_card_elevation">5dp</dimen>
+    <dimen name="launcher_card_corner_radius">15dp</dimen>
+    //activity main
+    <dimen name="main_search_margin_end">10dp</dimen>
+    <dimen name="main_drawer_icon_padding">10dp</dimen>
+    <dimen name="main_nasted_margin">10dp</dimen>
+    <dimen name="main_list_margin">5dp</dimen>
+    <dimen name="main_notice_text_size">24sp</dimen>
+    <dimen name="main_add_btn_margin">10dp</dimen>
+    //add dialog layout
+    <dimen name="add_dialog_layout_padding">5dp</dimen>
+    <dimen name="add_dialog_layout_margin_top">8dp</dimen>
+    <dimen name="add_dialog_password_view_width">300dp</dimen>
+    <dimen name="add_dialog_password_view_margin">3dp</dimen>
+    <dimen name="add_dialog_password_view_padding">5dp</dimen>
+    <dimen name="add_dialog_password_view_txt_size">23sp</dimen>
+    <dimen name="add_dialog_refresh_btn_padding">8dp</dimen>
+    <dimen name="add_dialog_notice_txt_size">16sp</dimen>
+    <dimen name="add_dialog_title_txt_size">21sp</dimen>
+    <dimen name="add_dialog_title_margin">8dp</dimen>
+    <dimen name="add_dialog_check_layout_margin">8dp</dimen>
+    <dimen name="add_dialog_v_selector_margin">8dp</dimen>
+    <dimen name="add_dialog_e_text_padding">15dp</dimen>
+    //change dialog layout
+    <dimen name="change_login_pass_et_margin">10dp</dimen>
+    <dimen name="change_login_pass_et_padding">15dp</dimen>
+    <dimen name="change_login_pass_check_box_margin">10dp</dimen>
+    <dimen name="change_login_width">360dp</dimen>
+    //colored toast layout
+    <dimen name="toast_horizontal_padding">20dp</dimen>
+    <dimen name="toast_vertical_padding">10dp</dimen>
+    <dimen name="toast_image_wh">24dp</dimen>
+    <dimen name="toast_tv_start_margin">10dp</dimen>
+    //edit password dialog layout
+    <dimen name="edit_pass_layout_margin">10dp</dimen>
+    <dimen name="edit_pass_layout_bottom_margin">0dp</dimen>
+    <dimen name="edit_e_pass_view_width">300dp</dimen>
+    <dimen name="edit_e_pass_view_margin">3dp</dimen>
+    <dimen name="edit_e_pass_view_padding">5dp</dimen>
+    <dimen name="edit_e_pass_view_text_size">24sp</dimen>
+    <dimen name="edit_refresh_btn_margin">3dp</dimen>
+    <dimen name="edit_refresh_btn_padding">8dp</dimen>
+    <dimen name="edit_notice_text_size">16sp</dimen>
+    <dimen name="edit_tile_text_size">22sp</dimen>
+    <dimen name="edit_title_margin">10dp</dimen>
+    <dimen name="edit_check_layout_margin">10dp</dimen>
+    <dimen name="edit_value_selector_margin">10dp</dimen>
+    <dimen name="edit_et_margin">10dp</dimen>
+    <dimen name="edit_et_padding">15dp</dimen>
+    //edit title dialog layout
+    <dimen name="edit_title_tv_margin">10dp</dimen>
+    <dimen name="edit_title_tv_text_size">20sp</dimen>
+    <dimen name="edit_title_et_margin">10dp</dimen>
+    <dimen name="edit_title_et_padding">15dp</dimen>
+    //login layout
+    <dimen name="choose_spinner_margin">10dp</dimen>
+    <dimen name="login_et_right_padding">5dp</dimen>
+    <dimen name="login_et_margin">10dp</dimen>
+    <dimen name="login_btn_text_size">24sp</dimen>
+    <dimen name="login_btn_margin">10dp</dimen>
+    <dimen name="forget_tv_text_size">18sp</dimen>
+    <dimen name="login_tv_margin">10dp</dimen>
+    //setting layout
+    <dimen name="setting_card_corner_radius">15dp</dimen>
+    <dimen name="setting_card_margin">15dp</dimen>
+    <dimen name="setting_image_layout_margin">20dp</dimen>
+    <dimen name="setting_image_wh">80dp</dimen>
+    <dimen name="setting_tv_text_size">16sp</dimen>
+    <dimen name="setting_tv_margin">5dp</dimen>
+    //fragment show layout
+    <dimen name="show_card_corner_radius">15dp</dimen>
+    <dimen name="show_card_elevation">2dp</dimen>
+    <dimen name="show_card_margin">10dp</dimen>
+    <dimen name="show_tv_text_size">22sp</dimen>
+    <dimen name="show_tv_margin">10dp</dimen>
+    <dimen name="show_btn_margin">5dp</dimen>
+    <dimen name="show_btn_padding">8dp</dimen>
+    <dimen name="show_layout_margin">10dp</dimen>
+    //navigation header layout
+    <dimen name="navigation_image_wh">100dp</dimen>
+    <dimen name="navigation_image_margin">10dp</dimen>
+    <dimen name="navigation_tv_text_size">20sp</dimen>
+    <dimen name="navigation_tv_margin">10dp</dimen>
+    //password list row layout
+    <dimen name="list_card_elevation">2dp</dimen>
+    <dimen name="list_card_corner_radius">15dp</dimen>
+    <dimen name="list_card_margin">1dp</dimen>
+    <dimen name="list_title_text_size">22sp</dimen>
+    <dimen name="list_tv_margin">10dp</dimen>
+    <dimen name="list_password_text_size">18sp</dimen>
+    <dimen name="list_btn_margin">5dp</dimen>
+    <dimen name="list_btn_padding">8dp</dimen>
+    //value selector layout
+    <dimen name="value_image_margin">10dp</dimen>
+    <dimen name="value_image_wh">32dp</dimen>
+    <dimen name="value_tv_min_width">24dp</dimen>
+    <dimen name="value_tv_max_width">30dp</dimen>
+    <dimen name="value_tv_text_size">16sp</dimen>
+    //icon
+    <dimen name="icon_wh">60dp</dimen>
+    <dimen name="menu_icon_wh">28dp</dimen>
+    <dimen name="setting_icon_wh">30dp</dimen>
+    //other
+    <dimen name="check_box_sizes">5dp</dimen>
+    <dimen name="spinner_text_size">16sp</dimen>
+    <dimen name="spinner_padding">5dp</dimen>
+    <dimen name="common_text_size">16sp</dimen>
+</resources>

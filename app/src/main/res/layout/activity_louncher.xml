@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/louncer_bg"
+    android:gravity="center_vertical"
+    tools:context=".activities.LouncherActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/launcher_app_icon_size"
+        android:layout_height="@dimen/launcher_app_icon_size"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/launcher_app_icon_margin"
+        android:scaleType="fitXY"
+        android:src="@drawable/appicon" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layoutDirection="rtl"
+        android:layout_marginBottom="@dimen/launcher_version_bottom_margin"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/launcher_version_name_text_size"
+            android:layout_marginEnd="@dimen/about_version_margin"
+            android:text="@string/build_version_text"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/about_version_margin"
+            android:textSize="@dimen/launcher_version_name_text_size"
+            android:id="@+id/build_version_name"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  <androidx.cardview.widget.CardView
+      android:layout_width="@dimen/launcher_card_size"
+      android:layout_height="@dimen/launcher_card_size"
+      app:cardElevation="@dimen/launcher_card_elevation"
+      android:layout_centerInParent="true"
+      app:cardCornerRadius="@dimen/launcher_card_corner_radius">
+
+      <FrameLayout
+          android:id="@+id/louncher_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+  </androidx.cardview.widget.CardView>
+</RelativeLayout>

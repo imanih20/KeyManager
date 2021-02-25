@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layoutDirection="rtl"
+    android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_margin="@dimen/value_image_margin"
+        android:id="@+id/btn_plus"
+        android:layout_width="@dimen/value_image_wh"
+        android:tint="@color/text_color"
+        android:layout_height="@dimen/value_image_wh"
+        android:src="@drawable/ic_plus"
+        android:layout_gravity="center_vertical"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/value_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/value_tv_min_width"
+        android:maxWidth="@dimen/value_tv_max_width"
+        android:gravity="center"
+        android:textSize="@dimen/value_tv_text_size"
+        android:textColor="@color/text_color"
+        android:layout_gravity="center_vertical"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_margin="@dimen/value_image_margin"
+        android:id="@+id/btn_minus"
+        android:layout_width="@dimen/value_image_wh"
+        android:layout_height="@dimen/value_image_wh"
+        android:tint="@color/text_color"
+        android:src="@drawable/ic_minus"
+        android:layout_gravity="center_vertical"/>
+    
+
+
+
+</LinearLayout>

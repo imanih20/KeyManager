@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/choose_spinner_margin"
+        android:gravity="right"
+        android:id="@+id/choose_spinner"
+        />
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="@dimen/common_text_size"
+        android:layoutDirection="rtl"
+        android:hint="@string/answer_hint"
+        android:gravity="right"
+        android:paddingRight="@dimen/login_et_right_padding"
+        android:id="@+id/answer"
+        android:layout_margin="@dimen/login_et_margin"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:textAllCaps="false"
+        android:textSize="@dimen/login_btn_text_size"
+        android:textColor="@color/text_color"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_btn_txt"
+        android:background="@drawable/btn_bg"
+        android:layout_margin="@dimen/login_btn_margin"
+        android:id="@+id/fragment_choose_btn"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

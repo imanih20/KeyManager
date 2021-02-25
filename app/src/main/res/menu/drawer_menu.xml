@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/options_nav"
+        android:title="@string/nav_drawer_options"
+        android:icon="@drawable/ic_baseline_settings_24"/>
+
+    <item android:title="@string/about_menu_item_text"
+        android:id="@+id/about_nav"
+        android:icon="@drawable/ic_baseline_info_24"/>
+
+</menu>
