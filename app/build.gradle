@@ -1,14 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        passwordmanager {
-            storeFile file('/home/mohyeddin/Android/kys/passwordmanager.jks')
-            storePassword '8374691756mhm'
-            keyAlias 'android'
-            keyPassword '8374691756mhm'
-        }
-    }
+   
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.mohyeddin.passwordmanager"
