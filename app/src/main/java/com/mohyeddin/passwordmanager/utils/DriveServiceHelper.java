@@ -20,8 +20,8 @@ import java.util.concurrent.Executors;
 
 public class DriveServiceHelper {
     private final Executor executor= Executors.newSingleThreadExecutor();
-    private Drive driveService;
-    private Activity activity;
+    private final Drive driveService;
+    private final Activity activity;
 
     public DriveServiceHelper(Drive driveService,Activity activity){
         this.driveService=driveService;
@@ -29,52 +29,41 @@ public class DriveServiceHelper {
     }
 
     public Task<String> createFile(){
-          return Tasks.call(executor, new Callable<String>() {
-              @Override
-              public String call() throws Exception {
-                  final File dbFile=new File();
-                  dbFile.setName(PasswordDbHelper.DB_NAME);
-                  java.io.File file=new java.io.File(activity.getDatabasePath(PasswordDbHelper.DB_NAME).toString());
-                  final FileContent fileContent=new FileContent("application/db",file);
-                  File datafile = null ;
-                  try {
-                      deleteFiles();
-                      datafile = driveService.files().create(dbFile, fileContent).execute();
-                  }catch (Exception e){
-                      e.printStackTrace();
-                  }
-                  if (datafile==null) {
-                      throw new IOException();
-                  }
-                  return datafile.getId();
+          return Tasks.call(executor, () -> {
+              final File dbFile=new File();
+              dbFile.setName(PasswordDbHelper.DB_NAME);
+              java.io.File file=new java.io.File(activity.getDatabasePath(PasswordDbHelper.DB_NAME).toString());
+              final FileContent fileContent=new FileContent("application/db",file);
+              File datafile = null ;
+              try {
+                  deleteFiles();
+                  datafile = driveService.files().create(dbFile, fileContent).execute();
+              }catch (Exception e){
+                  e.printStackTrace();
               }
+              if (datafile==null) {
+                  throw new IOException();
+              }
+              return datafile.getId();
           });
     }
     public Task<File> getFile(){
-        return Tasks.call(executor, new Callable<File>() {
-            @Override
-            public File call() throws Exception {
-                FileList list;
-                list=driveService.files().list().execute();
-                File file=null;
-                if (list!=null&&!list.isEmpty()) {
-                    for (File f : list.getFiles()) {
-                        file = f;
-                    }
-                    return file;
-                }else {
-                    AlertDialog.Builder builder=new AlertDialog.Builder(activity);
-                    builder.setTitle(R.string.error_title);
-                    builder.setMessage(R.string.no_file_error);
-                    builder.setPositiveButton(R.string.close_button_txt, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.show();
-                    return null;
+        return Tasks.call(executor, () -> {
+            FileList list;
+            list=driveService.files().list().execute();
+            File file=null;
+            if (list!=null&&!list.isEmpty()) {
+                for (File f : list.getFiles()) {
+                    file = f;
                 }
+                return file;
+            }else {
+                AlertDialog.Builder builder=new AlertDialog.Builder(activity);
+                builder.setTitle(R.string.error_title);
+                builder.setMessage(R.string.no_file_error);
+                builder.setPositiveButton(R.string.close_button_txt, (dialog, which) -> dialog.dismiss());
+                builder.show();
+                return null;
             }
         });
     }
@@ -93,26 +82,22 @@ public class DriveServiceHelper {
     }
     public Task<Boolean> readFile(final String fileId){
         final String infileName=activity.getDatabasePath(PasswordDbHelper.DB_NAME).toString();
-        return Tasks.call(executor,new Callable<Boolean>(){
-
-            @Override
-            public Boolean call(){
-                try {
-                    InputStream inputStream = driveService.files().get(fileId).executeMediaAsInputStream();
-                    OutputStream outputStream = new FileOutputStream(infileName);
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = inputStream.read(buffer)) > 0) {
-                        outputStream.write(buffer, 0, length);
-                    }
-                    outputStream.flush();
-                    outputStream.close();
-                    inputStream.close();
-                    return true;
-                }catch (Exception e){
-                    e.printStackTrace();
-                    return false;
+        return Tasks.call(executor, () -> {
+            try {
+                InputStream inputStream = driveService.files().get(fileId).executeMediaAsInputStream();
+                OutputStream outputStream = new FileOutputStream(infileName);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
                 }
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                return false;
             }
         });
     }

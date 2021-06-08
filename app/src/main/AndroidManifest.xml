@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.LouncherActivity"
+            android:name=".activities.LauncherActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask">

@@ -13,11 +13,13 @@ import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -38,11 +40,11 @@ public class AddDialog extends AppCompatDialogFragment implements CompoundButton
     private AppCompatTextView passwordTv;
     private AppCompatImageButton refreshButton;
     private AppCompatEditText titleEditText,customPasswordEditText;
-    private PasswordGenerator generator;
-    private Context context;
-    private PasswordDbHelper dbHelper;
-    private PasswordsListAdapter adapter;
-    private AppCompatTextView noticeTv;
+    private final PasswordGenerator generator;
+    private final Context context;
+    private final PasswordDbHelper dbHelper;
+    private final PasswordsListAdapter adapter;
+    private final AppCompatTextView noticeTv;
     private int checkedOptions;
     public AddDialog(Context context, PasswordDbHelper dbHelper, PasswordsListAdapter adapter){
         this.context=context;
@@ -52,32 +54,22 @@ public class AddDialog extends AppCompatDialogFragment implements CompoundButton
         generator=new PasswordGenerator();
     }
 
-    @NonNull
+    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //init password
-        String passwordText;
-        passwordText=generator.generatePassword(true,false,true,false,8);
-        checkedOptions=2;
-        final androidx.appcompat.app.AlertDialog.Builder dialog=new AlertDialog.Builder(context);
-        View view= LayoutInflater.from(context).inflate(R.layout.add_dialog_layout,null,false);
-        initializeLayoutContents(view);
-        passwordTv.setText(passwordText);
-        dialog.setView(view);
-        dialog.setPositiveButton(R.string.save_btn_title, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface d, int which) {
-                savePassword(d);
-            }
-        });
-
-        dialog.setNegativeButton(R.string.cancel_btn_title, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        return dialog.show();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.add_dialog_layout,container,false);
+        lowerAlphabet=view.findViewById(R.id.lower_alphabet);
+        upperAlphabet=view.findViewById(R.id.upper_alphabet);
+        numbers=view.findViewById(R.id.numbers);
+        specialChars=view.findViewById(R.id.special_chars);
+        valueSelector=view.findViewById(R.id.value_selector);
+        titleEditText=view.findViewById(R.id.title_edit_text);
+        passwordTv=view.findViewById(R.id.password_view);
+        customChoice=view.findViewById(R.id.custom_choice);
+        customPasswordEditText=view.findViewById(R.id.custom_password);
+        refreshButton=view.findViewById(R.id.refresh_btn);
+        return view;
     }
 
     private void savePassword(DialogInterface d) {
@@ -117,31 +109,19 @@ public class AddDialog extends AppCompatDialogFragment implements CompoundButton
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        String passwordText;
+        passwordText=generator.generatePassword(true,false,true,false,8);
+        checkedOptions=2;
+        passwordTv.setText(passwordText);
         try {
             if (getDialog()!=null&&getDialog().getWindow()!=null)
                 getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            AlertDialog alertDialog= (AlertDialog) getDialog();
-            if (alertDialog!=null) {
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setBackground(ContextCompat.getDrawable(context, R.drawable.dialog_btn_bg2));
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackground(ContextCompat.getDrawable(context, R.drawable.dialog_btn_bg));
-            }
+            AppCompatDialog alertDialog= (AppCompatDialog) getDialog();
         }catch (NullPointerException ignored){
         }
-    }
 
-    private void initializeLayoutContents(View view) {
-        //init dialog views
-        lowerAlphabet=view.findViewById(R.id.lower_alphabet);
-        upperAlphabet=view.findViewById(R.id.upper_alphabet);
-        numbers=view.findViewById(R.id.numbers);
-        specialChars=view.findViewById(R.id.special_chars);
-        valueSelector=view.findViewById(R.id.value_selector);
-        titleEditText=view.findViewById(R.id.title_edit_text);
-        passwordTv=view.findViewById(R.id.password_view);
-        customChoice=view.findViewById(R.id.custom_choice);
-        customPasswordEditText=view.findViewById(R.id.custom_password);
+
         passwordTv.setMovementMethod(new ScrollingMovementMethod());
-        refreshButton=view.findViewById(R.id.refresh_btn);
         valueSelector.setMaxValue(64);
         valueSelector.setMinValue(4);
         valueSelector.setValue(8);
@@ -187,8 +167,8 @@ public class AddDialog extends AppCompatDialogFragment implements CompoundButton
                 passwordTv.setText(generatePassword());
             }
         });
-    }
 
+    }
     private void enableViews(boolean enabled){
         passwordTv.setEnabled(enabled);
         refreshButton.setEnabled(enabled);

@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.mohyeddin.passwordmanager.R;
 import com.mohyeddin.passwordmanager.activities.MainActivity;
 import com.mohyeddin.passwordmanager.utils.LoginDbHelper;
 
 public class SignFragment extends Fragment implements  View.OnClickListener {
-    private AppCompatEditText passwordET;
-    private AppCompatEditText confirmET;
+    private TextInputEditText passwordET;
+    private TextInputEditText confirmET;
     private AppCompatButton signBtn;
     private LoginDbHelper dbHelper;
 

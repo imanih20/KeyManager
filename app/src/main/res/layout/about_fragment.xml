@@ -1,63 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:layout_height="match_parent">
+
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layoutDirection="rtl"
         android:background="@android:color/transparent"
-        android:id="@+id/toolbar"/>
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/app_icon_about_fragment_size"
-        android:layout_margin="@dimen/about_item_margin"
+        android:id="@+id/app_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/appicon"
-        android:layout_height="@dimen/app_icon_about_fragment_size"/>
+        app:layout_constraintBottom_toTopOf="@+id/app_name"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/about_item_margin"
         android:text="@string/app_name"
-        android:textStyle="italic"
         android:textSize="@dimen/about_fragment_app_name_text_size"
-        />
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/dev_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_icon" />
+
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dev_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/developer_name_top_margin"
+        android:text="@string/developer_name"
         android:textSize="@dimen/about_text_size"
-        android:text="@string/developer_name"/>
+        app:layout_constraintBottom_toTopOf="@+id/call_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/call_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/call_us"
         android:textSize="@dimen/about_text_size"
-        android:layout_margin="@dimen/about_callus_margin"/>
+        app:layout_constraintBottom_toTopOf="@+id/gmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dev_name" />
+
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/gmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/gmail"
         android:textSize="@dimen/about_text_size"
-        android:text="@string/gmail"/>
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_title" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layoutDirection="rtl"
-        android:layout_marginTop="@dimen/about_version_layout_top_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gmail">
+
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/about_version_title_text_size"
             android:layout_marginEnd="@dimen/about_version_margin"
-            android:text="@string/build_version_text"/>
+            android:text="@string/build_version_text"
+            android:textSize="@dimen/about_version_title_text_size" />
+
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/version_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/about_version_margin"
-            android:id="@+id/version_code"/>
+            android:layout_marginStart="@dimen/about_version_margin" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.32" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.68" />
+</androidx.constraintlayout.widget.ConstraintLayout>

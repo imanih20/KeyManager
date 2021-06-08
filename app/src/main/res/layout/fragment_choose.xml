@@ -4,27 +4,34 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/choose_spinner_margin"
-        android:gravity="right"
+        android:gravity="start"
         android:id="@+id/choose_spinner"
         />
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:textSize="@dimen/common_text_size"
-        android:layoutDirection="rtl"
         android:hint="@string/answer_hint"
-        android:gravity="right"
-        android:paddingRight="@dimen/login_et_right_padding"
-        android:id="@+id/answer"
-        android:layout_margin="@dimen/login_et_margin"/>
+        android:textDirection="inherit"
+        android:layout_margin="@dimen/login_et_margin"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="@dimen/common_text_size"
+            android:layoutDirection="rtl"
+            android:id="@+id/answer"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:textAllCaps="false"

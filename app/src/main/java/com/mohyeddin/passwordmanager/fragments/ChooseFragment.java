@@ -12,6 +12,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.mohyeddin.passwordmanager.R;
 import com.mohyeddin.passwordmanager.activities.MainActivity;
 import com.mohyeddin.passwordmanager.models.LoginPasswordModel;
@@ -19,7 +21,7 @@ import com.mohyeddin.passwordmanager.utils.LoginDbHelper;
 
 public class ChooseFragment extends Fragment {
     private AppCompatSpinner chooseSpinner;
-    private AppCompatEditText answerET;
+    private TextInputEditText answerET;
     private AppCompatButton signBtn;
     private LoginDbHelper dbHelper;
 

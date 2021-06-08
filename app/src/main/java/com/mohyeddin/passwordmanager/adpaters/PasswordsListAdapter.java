@@ -6,22 +6,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.service.quicksettings.Tile;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mohyeddin.passwordmanager.R;
@@ -32,24 +23,18 @@ import com.mohyeddin.passwordmanager.models.PasswordModel;
 import com.mohyeddin.passwordmanager.utils.PasswordDbHelper;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class PasswordsListAdapter extends RecyclerView.Adapter<PasswordsListAdapter.ViewHolder>{
     private List<PasswordModel> passwordModels;
-    private Context context;
-    private PasswordDbHelper dbHelper;
+    private final Context context;
+    private final PasswordDbHelper dbHelper;
     private int height;
     public PasswordsListAdapter(Context context, List<PasswordModel> passwordModels, PasswordDbHelper dbHelper){
         this.context=context;
         this.passwordModels=passwordModels;
-        this.dbHelper=dbHelper;
-    }
-    public PasswordsListAdapter(Context context,PasswordDbHelper dbHelper){
-        this.context=context;
-        this.passwordModels=new ArrayList<>();
         this.dbHelper=dbHelper;
     }
     public void setPasswordList(List<PasswordModel> list){

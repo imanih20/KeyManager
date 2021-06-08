@@ -11,13 +11,15 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.mohyeddin.passwordmanager.R;
 import com.mohyeddin.passwordmanager.activities.MainActivity;
 import com.mohyeddin.passwordmanager.utils.LoginDbHelper;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
     private AppCompatTextView noticeTv;
-    private AppCompatEditText passwordEditText;
+    private TextInputEditText passwordEditText;
     private AppCompatButton loginBtn;
     private AppCompatTextView forgetPasswordTv;
     private String password;

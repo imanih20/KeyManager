@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,36 +14,47 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/common_text_size"
             android:layoutDirection="rtl"
+            android:gravity="center"
             android:text="@string/notice_txt"
-            android:layout_gravity="right"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/login_tv_margin"
             android:id="@+id/sign_notice_tv"/>
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:textSize="@dimen/common_text_size"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_baseline_key_24"
-            android:layoutDirection="rtl"
-            android:focusableInTouchMode="true"
-            android:gravity="right"
-            android:hint="@string/password_edit_txt_hint"
-            android:paddingRight="@dimen/login_et_right_padding"
-            android:inputType="textPassword"
-            android:id="@+id/sign_password"
-            android:layout_margin="@dimen/login_et_margin"/>
-        <androidx.appcompat.widget.AppCompatEditText
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_baseline_key_24"
+            app:passwordToggleEnabled="true"
+            android:layoutDirection="ltr"
+            android:layout_margin="@dimen/login_et_margin">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:textSize="@dimen/common_text_size"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="@string/password_edit_txt_hint"
+                android:inputType="textPassword"
+                android:id="@+id/sign_password" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:drawableRight="@drawable/ic_baseline_key_24"
-            android:layoutDirection="rtl"
-            android:textSize="@dimen/common_text_size"
-            android:hint="@string/confirm_edit_txt_hint"
-            android:gravity="right"
-            android:paddingRight="@dimen/login_et_right_padding"
-            android:id="@+id/confirm_password"
-            android:layout_margin="@dimen/login_et_margin"/>
+            app:passwordToggleEnabled="true"
+            android:layout_marginHorizontal="@dimen/login_et_margin"
+            android:layoutDirection="ltr"
+            android:layout_marginBottom="@dimen/login_et_margin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_baseline_key_24">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textSize="@dimen/common_text_size"
+                android:hint="@string/confirm_edit_txt_hint"
+                android:id="@+id/confirm_password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:textAllCaps="false"

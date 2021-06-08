@@ -77,7 +77,7 @@
     <dimen name="login_et_margin">20dp</dimen>
     <dimen name="login_btn_text_size">50sp</dimen>
     <dimen name="login_btn_margin">20dp</dimen>
-    <dimen name="forget_tv_text_size">32dp</dimen>
+    <dimen name="forget_tv_text_size">32sp</dimen>
     <dimen name="login_tv_margin">20dp</dimen>
     //setting layout
     <dimen name="setting_card_corner_radius">30dp</dimen>

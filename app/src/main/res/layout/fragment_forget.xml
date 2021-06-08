@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:layoutDirection="rtl"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layoutDirection="rtl"
         android:textSize="@dimen/forget_tv_text_size"
-        android:layout_gravity="right"
+        android:layout_gravity="start"
         android:layout_margin="@dimen/login_tv_margin"
-        android:id="@+id/question_tv"/>
-    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/question_tv"
+        tools:ignore="SpUsage" />
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
-        android:gravity="right"
-        android:hint="@string/answer_hint"
-        android:paddingRight="@dimen/login_et_right_padding"
-        android:inputType="textPassword"
-        android:textSize="@dimen/common_text_size"
-        android:id="@+id/answer_edit_txt"
-        android:layout_margin="@dimen/login_et_margin"/>
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_margin="@dimen/login_et_margin">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:gravity="start"
+            android:hint="@string/answer_hint"
+            android:inputType="textPassword"
+            android:textDirection="inherit"
+            android:textSize="@dimen/common_text_size"
+            android:id="@+id/answer_edit_txt"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:textAllCaps="false"

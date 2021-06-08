@@ -27,12 +27,5 @@ public class App extends Application {
                                 .build()))
 
                 .build());
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-        boolean night=preferences.getBoolean(SettingsFragment.NIGHT_MODE_KEY,false);
-        if (night){
-            ThemeHelper.applyTheme(ThemeHelper.DARK_MODE);
-        }else {
-            ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE);
-        }
     }
 }

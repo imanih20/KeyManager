@@ -80,4 +80,8 @@
     <string name="about_menu_item_text">درباره</string>
     <string name="call_us">تماس با ما</string>
     <string name="gmail">Keymanager.info@gmail.com</string>
+    <string name="add_nav_menu">رمز جدید</string>
+    <string name="show_nav_menu">لیست</string>
+    <string name="optionsl_nav">امکانات</string>
+    <string name="info_nav">درباره ما</string>
 </resources>
