@@ -6,11 +6,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mohyeddin.passwordmanager.R;
 import com.mohyeddin.passwordmanager.activities.App;
 import com.mohyeddin.passwordmanager.activities.MainActivity;
-import com.mohyeddin.passwordmanager.activities.SecondActivity;
+import com.mohyeddin.passwordmanager.databinding.PasswordsListRowLayoutBinding;
+import com.mohyeddin.passwordmanager.fragments.ShowPasswordFragment;
 import com.mohyeddin.passwordmanager.models.PasswordModel;
 import com.mohyeddin.passwordmanager.utils.PasswordDbHelper;
+import com.mohyeddin.passwordmanager.utils.ShowFragmentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,6 @@ public class PasswordsListAdapter extends RecyclerView.Adapter<PasswordsListAdap
     private List<PasswordModel> passwordModels;
     private final Context context;
     private final PasswordDbHelper dbHelper;
-    private int height;
     public PasswordsListAdapter(Context context, List<PasswordModel> passwordModels, PasswordDbHelper dbHelper){
         this.context=context;
         this.passwordModels=passwordModels;
@@ -43,10 +46,8 @@ public class PasswordsListAdapter extends RecyclerView.Adapter<PasswordsListAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.passwords_list_row_layout,
-                parent,false);
-        height=view.getHeight();
-        return new ViewHolder(view);
+        PasswordsListRowLayoutBinding binding = PasswordsListRowLayoutBinding.inflate(LayoutInflater.from(context));
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -54,57 +55,26 @@ public class PasswordsListAdapter extends RecyclerView.Adapter<PasswordsListAdap
         final String password=passwordModels.get(position).getPassWord();
         final int id=passwordModels.get(position).getId();
         final String title=passwordModels.get(position).getTitle();
-        holder.titleTv.setText((title.isEmpty())?"<بدون عنوان>": title);
-        holder.passwordTV.setText(password);
-        holder.copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                copyToClipboard(password);
-            }
-        });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(passwordModels.get(position));
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, SecondActivity.class);
-                intent.putExtra(App.FRAGMENT_TAG,1);
-                intent.putExtra(PasswordModel.ID_KEY,id);
-                intent.putExtra(PasswordModel.TITLE_KEY,title);
-                intent.putExtra(PasswordModel.PASSWORD_KEY,password);
-                context.startActivity(intent);
-            }
-        });
+        holder.binding.titleTv.setText((title.isEmpty())?"<بدون عنوان>": title);
+        holder.binding.passwordTv.setText(password);
+        holder.binding.copyBtn.setOnClickListener(v -> copyToClipboard(password));
+        holder.binding.deleteBtn.setOnClickListener(v -> showDialog(passwordModels.get(position)));
+        holder.itemView.setOnClickListener(v -> ShowFragmentUtils.showFragment(
+                ((AppCompatActivity)context).getSupportFragmentManager(),
+                R.id.louncher_container,
+                ShowPasswordFragment.newInstance(id,password,title)));
     }
 
     private void showDialog(final PasswordModel model) {
         AlertDialog.Builder dialog=new AlertDialog.Builder(context);
         dialog.setMessage(R.string.delete_dialog_message);
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dbHelper.deletePassword(model.getId());
-                passwordModels.remove(model);
-                notifyDataSetChanged();
-                if (passwordModels.isEmpty()){
-                    ((MainActivity)context).notice.setVisibility(View.VISIBLE);
-                }
-            }
+        dialog.setPositiveButton(R.string.yes, (dialog12, which) -> {
+            dbHelper.deletePassword(model.getId());
+            passwordModels.remove(model);
+            notifyDataSetChanged();
         });
-        dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        dialog.setNegativeButton(R.string.no, (dialog1, which) -> dialog1.dismiss());
         dialog.show();
-    }
-    public int getHeight(){
-        return height*getItemCount();
     }
     private void copyToClipboard(String text){
         ClipboardManager manager= (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
@@ -123,14 +93,10 @@ public class PasswordsListAdapter extends RecyclerView.Adapter<PasswordsListAdap
         notifyDataSetChanged();
     }
     static class ViewHolder extends RecyclerView.ViewHolder {
-        AppCompatTextView titleTv,passwordTV;
-        AppCompatImageButton copy,delete;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleTv=itemView.findViewById(R.id.title_tv);
-            passwordTV=itemView.findViewById(R.id.password_tv);
-            delete=itemView.findViewById(R.id.delete_btn);
-            copy=itemView.findViewById(R.id.copy_btn);
+        PasswordsListRowLayoutBinding binding;
+        public ViewHolder(@NonNull PasswordsListRowLayoutBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

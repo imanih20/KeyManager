@@ -71,4 +71,31 @@
         android:padding="@dimen/change_login_pass_et_padding"
         android:layout_margin="@dimen/change_login_pass_et_margin"
         android:hint="@string/answer_hint"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/save_btn"
+            android:background="@drawable/btn_bg"
+            android:layout_marginHorizontal="@dimen/add_dialog_title_margin"
+            android:layout_marginVertical="@dimen/edit_pass_layout_margin"
+            android:textSize="@dimen/common_text_size"
+            android:textColor="@android:color/white"
+            android:text="@string/save_btn_title"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/cancel_button"
+            android:background="@drawable/btn_bg"
+            android:layout_marginHorizontal="@dimen/add_dialog_title_margin"
+            android:layout_marginVertical="@dimen/edit_pass_layout_margin"
+            android:textSize="@dimen/common_text_size"
+            android:textColor="@android:color/white"
+            android:text="@string/cancel_btn_title"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

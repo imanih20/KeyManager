@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layoutDirection="rtl"
     android:background="@drawable/dialog_bg"
@@ -13,13 +13,45 @@
         android:layout_margin="@dimen/edit_title_tv_margin"
         android:textSize="@dimen/edit_title_tv_text_size"
         android:text="@string/title_tv_txt"/>
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/common_text_size"
-        android:background="@drawable/search_query_bg"
-        android:padding="@dimen/edit_title_et_padding"
-        android:id="@+id/new_title_edit_txt"
-        android:layout_margin="@dimen/edit_title_et_margin"
-        android:hint="@string/new_title_tv"/>
+        app:boxBackgroundColor="@android:color/white"
+        android:hint="@string/new_title_tv"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_margin="@dimen/edit_title_et_margin">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size"
+            android:id="@+id/new_title_edit_txt"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/save_btn"
+            android:background="@drawable/btn_bg"
+            android:layout_marginHorizontal="@dimen/add_dialog_title_margin"
+            android:layout_marginVertical="@dimen/edit_pass_layout_margin"
+            android:textSize="@dimen/common_text_size"
+            android:textColor="@android:color/white"
+            android:text="@string/save_btn_title"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/cancel_button"
+            android:background="@drawable/btn_bg"
+            android:layout_marginHorizontal="@dimen/add_dialog_title_margin"
+            android:layout_marginVertical="@dimen/edit_pass_layout_margin"
+            android:textSize="@dimen/common_text_size"
+            android:textColor="@android:color/white"
+            android:text="@string/cancel_btn_title"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

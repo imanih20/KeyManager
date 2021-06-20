@@ -7,7 +7,7 @@
     <FrameLayout
         android:id="@+id/main_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
         app:layout_constraintTop_toTopOf="parent" />
 

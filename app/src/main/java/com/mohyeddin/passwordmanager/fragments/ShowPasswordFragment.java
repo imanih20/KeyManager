@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import com.mohyeddin.passwordmanager.R;
+import com.mohyeddin.passwordmanager.databinding.FragmentShowBinding;
 import com.mohyeddin.passwordmanager.models.PasswordModel;
 import com.mohyeddin.passwordmanager.utils.PasswordDbHelper;
 import com.mohyeddin.passwordmanager.views.EditPasswordDialog;
@@ -22,10 +21,9 @@ import com.mohyeddin.passwordmanager.views.EditTitleDialog;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
-public class ShowPasswordFragment extends Fragment implements View.OnClickListener {
+public class ShowPasswordFragment extends Fragment {
+    private FragmentShowBinding binding;
     private PasswordModel passwordModel;
-    private AppCompatTextView titleTv,passwordTv;
-    private AppCompatImageButton titleEditBtn,passwordEditBtn,deleteBtn,copyBtn;
     private PasswordDbHelper dbHelper;
     private EditTitleDialog editTitleDialog;
     private EditPasswordDialog editPasswordDialog;
@@ -42,19 +40,13 @@ public class ShowPasswordFragment extends Fragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_show,container,false);
-        titleTv=view.findViewById(R.id.title_show);
-        passwordTv=view.findViewById(R.id.password_show);
-        titleEditBtn=view.findViewById(R.id.title_edit_btn);
-        passwordEditBtn=view.findViewById(R.id.password_edit_btn);
-        deleteBtn=view.findViewById(R.id.delete_btn);
-        copyBtn=view.findViewById(R.id.copy_btn);
-        return view;
+        binding = FragmentShowBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         dbHelper=new PasswordDbHelper(getContext());
         if (getArguments()!=null) {
             passwordModel=new PasswordModel();
@@ -63,63 +55,51 @@ public class ShowPasswordFragment extends Fragment implements View.OnClickListen
             passwordModel.setTitle(getArguments().getString(PasswordModel.TITLE_KEY));
         }
         if (passwordModel!=null){
-            titleTv.setText((passwordModel.getTitle().isEmpty())?"<بدون عنوان>":passwordModel.getTitle());
-            passwordTv.setText(passwordModel.getPassWord());
-            titleEditBtn.setOnClickListener(this);
-            passwordEditBtn.setOnClickListener(this);
-            deleteBtn.setOnClickListener(this);
-            copyBtn.setOnClickListener(this);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.title_edit_btn:
-                showEditTitleDialog();
-                break;
-            case R.id.password_edit_btn:
-                showEditPassDialog();
-                break;
-            case R.id.delete_btn:
+            binding.titleShow.setText((passwordModel.getTitle().isEmpty())?"<بدون عنوان>":passwordModel.getTitle());
+            binding.passwordShow.setText(passwordModel.getPassWord());
+            binding.titleEditBtn.setOnClickListener(v -> showEditTitleDialog());
+            binding.passwordEditBtn.setOnClickListener(v -> showEditPassDialog());
+            binding.deleteBtn.setOnClickListener(v -> {
                 AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
                 dialog.setMessage(R.string.delete_dialog_message);
-                dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dbHelper.deletePassword(passwordModel.getId());
-                        if (getActivity()!=null)getActivity().finish();
-                    }
+                dialog.setPositiveButton(R.string.yes, (dialog1, which) -> {
+                    dbHelper.deletePassword(passwordModel.getId());
+                    if (getActivity()!=null)getActivity().finish();
                 });
-                dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                dialog.setNegativeButton(R.string.no, (dialog12, which) -> dialog12.dismiss());
                 dialog.show();
-                break;
-            case R.id.copy_btn:
+            });
+            binding.copyBtn.setOnClickListener(v -> {
                 if (getContext()!=null) {
                     ClipboardManager manager = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
-                    ClipData data = ClipData.newPlainText("key", passwordTv.getText());
+                    ClipData data = ClipData.newPlainText("key", binding.passwordShow.getText());
                     manager.setPrimaryClip(data);
                     Toast.makeText(getContext(), R.string.copy_massage, Toast.LENGTH_SHORT).show();
                 }
-                break;
+            });
         }
     }
+
     private void showEditTitleDialog() {
-        editTitleDialog=new EditTitleDialog(getContext(),dbHelper,passwordModel);
+        editTitleDialog=new EditTitleDialog(dbHelper,passwordModel);
         editTitleDialog.show(getParentFragmentManager(),"titleDialog");
-        editTitleDialog.setTitleTvToEdit(titleTv);
+        editTitleDialog.onDismiss(new DialogInterface() {
+            @Override
+            public void cancel() {
+
+            }
+
+            @Override
+            public void dismiss() {
+                requireActivity().recreate();
+            }
+        });
         editTitleDialog.setCancelable(false);
     }
 
     private void showEditPassDialog(){
-        editPasswordDialog=new EditPasswordDialog(getContext(),dbHelper,passwordModel);
+        editPasswordDialog=new EditPasswordDialog(dbHelper,passwordModel);
         editPasswordDialog.show(getParentFragmentManager(),"passwordDialog");
-        editPasswordDialog.setPasswordTv(passwordTv);
         editPasswordDialog.setCancelable(false);
     }
 

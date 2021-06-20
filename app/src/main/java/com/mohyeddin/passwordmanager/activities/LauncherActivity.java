@@ -1,32 +1,31 @@
 package com.mohyeddin.passwordmanager.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import com.mohyeddin.passwordmanager.BuildConfig;
 import com.mohyeddin.passwordmanager.R;
+import com.mohyeddin.passwordmanager.databinding.ActivityLouncherBinding;
 import com.mohyeddin.passwordmanager.fragments.LoginFragment;
 import com.mohyeddin.passwordmanager.fragments.SignFragment;
 import com.mohyeddin.passwordmanager.utils.LoginDbHelper;
+import com.mohyeddin.passwordmanager.utils.ShowFragmentUtils;
 
 public class LauncherActivity extends MyActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_louncher);
-        AppCompatTextView buildVersion = findViewById(R.id.build_version_name);
-        buildVersion.setText(BuildConfig.VERSION_NAME);
+        ActivityLouncherBinding binding = ActivityLouncherBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.buildVersionName.setText(BuildConfig.VERSION_NAME);
         LoginDbHelper dbHelper=new LoginDbHelper(this);
+        Fragment fragment;
         if (dbHelper.getLoginPassword()==null){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.louncher_container, SignFragment.newInstance(true,""))
-            .commit();
+            fragment = SignFragment.newInstance(true,"");
         }else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.louncher_container, LoginFragment.newInstance())
-                    .commit();
+            fragment = LoginFragment.newInstance();
         }
-
+        ShowFragmentUtils.showFragment(getSupportFragmentManager(),binding.louncherContainer.getId(),fragment);
     }
 }

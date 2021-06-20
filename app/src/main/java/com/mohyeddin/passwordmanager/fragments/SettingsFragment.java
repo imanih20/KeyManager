@@ -5,33 +5,27 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.UiModeManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
-import com.google.api.services.drive.model.File;
 import com.mohyeddin.passwordmanager.R;
+import com.mohyeddin.passwordmanager.databinding.FragmentSettingBinding;
 import com.mohyeddin.passwordmanager.models.PasswordModel;
 import com.mohyeddin.passwordmanager.utils.ConnectionHelper;
 import com.mohyeddin.passwordmanager.utils.DriveServiceHelper;
@@ -44,14 +38,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class SettingsFragment extends Fragment {
-
-    public static final int REQUEST_CODE_SIGN_IN_BACKUP=100;
-    public static final int REQUEST_CODE_SIGN_IN_RESTORE=101;
-    private CardView nightMode;
-    private CardView backupOption;
-    private CardView restoreOption;
-    private CardView changeOption;
-    private AppCompatTextView mode;
+    private ActivityResultLauncher<Intent> backUpResultLauncher;
+    private ActivityResultLauncher<Intent> restoreResultLauncher;
+    private FragmentSettingBinding binding;
     private DriveServiceHelper driveService;
     private GoogleSignInClient signInClient;
     private ThemeHelper themeHelper;
@@ -62,26 +51,38 @@ public class SettingsFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        backUpResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult()
+                , result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        handleSignInResult(result.getData(),true);
+                    }
+                });
+        restoreResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult()
+                , result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        handleSignInResult(result.getData(),false);
+                    }
+                });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_setting,container,false);
-        nightMode=view.findViewById(R.id.night_mode);
-        mode=view.findViewById(R.id.mode);
-        backupOption=view.findViewById(R.id.backup);
-        restoreOption=view.findViewById(R.id.restore);
-        changeOption=view.findViewById(R.id.password_reset);
+        binding = FragmentSettingBinding.inflate(inflater);
         themeHelper = new ThemeHelper(requireContext());
-        return view;
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        nightMode.setOnClickListener(v -> {
-            themeHelper.switchMode();
-        });
-        backupOption.setOnClickListener(v -> {
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.nightMode.setOnClickListener(v -> themeHelper.switchMode());
+        binding.backup.setOnClickListener(v -> {
             if (getActivity() != null)
                 if (ConnectionHelper.isOnline(getActivity())){
                     requestGoogleSignIn(true);
@@ -89,7 +90,7 @@ public class SettingsFragment extends Fragment {
                     showConnectDialog(true);
                 }
         });
-        restoreOption.setOnClickListener(v -> {
+        binding.restore.setOnClickListener(v -> {
             if (getActivity()!=null)
                 if (ConnectionHelper.isOnline(getActivity())){
                     requestGoogleSignIn(false);
@@ -97,7 +98,7 @@ public class SettingsFragment extends Fragment {
                     showConnectDialog(false);
                 }
         });
-        changeOption.setOnClickListener(v -> {
+        binding.passwordReset.setOnClickListener(v -> {
             ChangeLoginDialog changeLoginDialog = new ChangeLoginDialog(getContext());
             changeLoginDialog.show(getParentFragmentManager(),"changeLogin");
             changeLoginDialog.setCancelable(false);
@@ -108,26 +109,9 @@ public class SettingsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (themeHelper.getMode() == UiModeManager.MODE_NIGHT_YES){
-            mode.setText(R.string.night_mode);
+            binding.mode.setText(R.string.night_mode);
         }else {
-            mode.setText(R.string.day_mode);
-        }
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
-            case REQUEST_CODE_SIGN_IN_RESTORE:
-                if (resultCode== Activity.RESULT_OK){
-                    //backup.connectToDrive(true);
-                    handleSignInResult(data,false);
-                }
-                break;
-            case REQUEST_CODE_SIGN_IN_BACKUP:
-                if (resultCode== Activity.RESULT_OK){
-                    //backup.connectToDrive(true);
-                    handleSignInResult(data,true);
-                }
-                break;
+            binding.mode.setText(R.string.day_mode);
         }
     }
 
@@ -200,9 +184,9 @@ public class SettingsFragment extends Fragment {
         if (getContext()!=null)
             signInClient=GoogleSignIn.getClient(getContext(),signInOptions);
         if (isBackup){
-           startActivityForResult(signInClient.getSignInIntent(),REQUEST_CODE_SIGN_IN_BACKUP);
+           backUpResultLauncher.launch(signInClient.getSignInIntent());
         }else {
-            startActivityForResult(signInClient.getSignInIntent(),REQUEST_CODE_SIGN_IN_RESTORE);
+            restoreResultLauncher.launch(signInClient.getSignInIntent());
         }
     }
     private void handleSignInResult(Intent result, final boolean isBackup) {
@@ -214,10 +198,7 @@ public class SettingsFragment extends Fragment {
                                     getContext(), Collections.singleton(DriveScopes.DRIVE_FILE));
                     credential.setSelectedAccount(googleSignInAccount.getAccount());
                     Drive googleDriveService =
-                            new Drive.Builder(
-                                    AndroidHttp.newCompatibleTransport(),
-                                    JacksonFactory.getDefaultInstance(),
-                                    credential)
+                            new Drive.Builder(new NetHttpTransport(), GsonFactory.getDefaultInstance(),credential)
                                     .setApplicationName("passwordmanager")
                                     .build();
                     driveService=new DriveServiceHelper(googleDriveService,getActivity());
